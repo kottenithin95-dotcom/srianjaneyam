@@ -1,0 +1,1 @@
+web: gunicorn nitin_deploy.wsgi

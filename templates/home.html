@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="2px solid">
+        <tr>
+            <th>stu_rollnumber</th>
+            <th>stu_name</th>
+            <th>stu_class</th>
+            <th>stu_mobile</th>
+            <th>stu_gender</th>
+            <th>stu_imgae</th>
+            <th>stu_markssheet</th>
+        </tr>
+        {% for x in data %}
+        <tr>
+            <td>{{x.stu_rollnumber}}</td>
+            <td>{{x.stu_name}}</td>
+            <td>{{x.stu_class}}</td>
+            <td>{{x.stu_mobile}}</td>
+            <td>{{x.stu_gender}}</td>
+            <td>{{x.stu_image}}</td>
+            <td>{{x.stu_markssheet}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
