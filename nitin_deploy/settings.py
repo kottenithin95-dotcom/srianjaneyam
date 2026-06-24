@@ -163,6 +163,6 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'kottenithin95@gmail.com'
 
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_PASSWORD = nwgy dcnc joxo sxzt
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
