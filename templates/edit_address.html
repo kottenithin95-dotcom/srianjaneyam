@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Address</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/edit_address.css' %}">
+</head>
+<body>
+
+<div class="floating-circle circle1"></div>
+<div class="floating-circle circle2"></div>
+<div class="floating-circle circle3"></div>
+
+<div class="edit-card">
+
+    <div class="card-header">
+
+        <div class="icon">
+            ✏️
+        </div>
+
+        <h1>Edit Address</h1>
+
+        <p>
+            Update your delivery information
+        </p>
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="grid">
+
+            <div class="input-box">
+                <label>Full Name</label>
+                <input
+                    type="text"
+                    name="full_name"
+                    value="{{ address.full_name }}"
+                    required
+                    placeholder="fullname"
+                >
+            </div>
+
+            <div class="input-box">
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ address.email }}"
+                    required
+                    placeholder="email"
+                >
+            </div>
+
+            <div class="input-box">
+                <label>Mobile Number</label>
+                <input
+                    type="text"
+                    name="mobile"
+                    value="{{ address.mobile }}"
+                    required
+                    placeholder="mobile"
+                >
+            </div>
+
+            <div class="input-box">
+                <label>Pincode</label>
+                <input
+                    type="text"
+                    name="pincode"
+                    value="{{ address.pincode }}"
+                    required
+                    placeholder="pincode"
+                >
+            </div>
+
+            <div class="input-box full">
+                <label>Address</label>
+                <textarea
+                    name="address_line"
+                    required
+                    placeholder="address_line"
+                >{{ address.address_line }}</textarea>
+            </div>
+
+            <div class="input-box">
+                <label>City</label>
+                <input
+                    type="text"
+                    name="city"
+                    value="{{ address.city }}"
+                    required
+                    placeholder="city"
+                >
+            </div>
+
+            <div class="input-box">
+                <label>State</label>
+                <input
+                    type="text"
+                    name="state"
+                    value="{{ address.state }}"
+                    required
+                    placeholder="state"
+                >
+            </div>
+
+        </div>
+
+        <button type="submit">
+            Update Address
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

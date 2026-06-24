@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+</head>
+<body>
+
+<div class="checkout-container">
+
+    <h1>💳 Secure Checkout</h1>
+
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- ADDRESS SECTION -->
+
+    <div class="address-card">
+
+        <h2>📍 Shipping Address</h2>
+
+        <p>
+            <strong>{{ address.full_name }}</strong>
+        </p>
+
+        <p>{{ address.mobile }}</p>
+
+        <p>{{ address.address_line }}</p>
+
+        <p>{{ address.city }}</p>
+
+        <p>{{ address.state }}</p>
+
+        <p>{{ address.pincode }}</p>
+
+        <a href="{% url 'edit_address' address.id %}">
+            ✏️ Edit Address
+        </a>
+
+    </div>
+
+    <!-- TOTAL -->
+
+    <div class="total-box">
+
+        <h2>
+            Total Amount :
+            ₹{{ cart.total }}
+        </h2>
+
+    </div>
+
+    <!-- PAYMENT -->
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="payment-card">
+
+            <h2>💰 Payment Method</h2>
+
+            <label>
+
+                <input
+                    type="radio"
+                    name="payment_method"
+                    value="cod"
+                    checked
+                    onclick="hideUPI()"
+                >
+
+                Cash On Delivery
+
+            </label>
+
+            <label>
+
+                <input
+                    type="radio"
+                    name="payment_method"
+                    value="upi"
+                    onclick="showUPI()"
+                >
+
+                UPI Payment
+
+            </label>
+
+        </div>
+
+        <!-- UPI SECTION -->
+
+        <div
+            id="upi-section"
+            class="upi-box"
+            style="display:none;"
+        >
+
+            <h3>📱 Scan & Pay</h3>
+
+            <img
+                src="../static/images/upiid_paytm.jpeg"
+                alt="UPI QR"
+            >
+
+            <p>
+                UPI ID:
+                <strong>
+                    6303395101@pthdfc
+                </strong>
+            </p>
+
+
+            <p>
+                After payment enter transaction ID
+            </p>
+
+
+            <input
+                type="text"
+                name="transaction_id"
+                placeholder="Enter Transaction ID"
+            >
+
+            <div class="payment-warning">
+
+                <span>⚠️ Verification Notice</span>
+
+                <p>
+                    Please enter a valid UPI Transaction ID. Orders submitted with fake,
+                    incorrect, duplicate, or unverifiable transaction IDs may be cancelled
+                    after payment verification.
+                </p>
+
+            </div>
+
+        </div>
+
+        <button type="submit">
+
+            🚀 Place Order
+
+        </button>
+
+        <a
+            href="{% url 'cart' %}"
+            class="back-link"
+        >
+            ← Back To Cart
+        </a>
+
+    </form>
+
+</div>
+
+<script>
+
+function showUPI(){
+
+    document.getElementById(
+        "upi-section"
+    ).style.display = "block";
+
+}
+
+function hideUPI(){
+
+    document.getElementById(
+        "upi-section"
+    ).style.display = "none";
+
+}
+
+document.querySelector("form")
+.addEventListener("submit", function(e){
+
+    let upi = document.querySelector(
+        'input[value="upi"]'
+    );
+
+    let transaction = document.querySelector(
+        'input[name="transaction_id"]'
+    );
+
+    if(
+        upi.checked &&
+        transaction.value.trim() === "" 
+    ){
+
+        alert(
+            "Please enter UPI Transaction ID"
+        );
+
+        e.preventDefault();
+    }
+
+});
+
+</script>
+
+</body>
+</html>

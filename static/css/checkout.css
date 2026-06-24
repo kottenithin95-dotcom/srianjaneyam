@@ -1,0 +1,550 @@
+/* ===================================
+   PREMIUM 2026 CHECKOUT PAGE
+=================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    padding:30px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow-x:hidden;
+
+    position:relative;
+
+    background:
+    linear-gradient(
+    135deg,
+    #0f172a,
+    #4f46e5,
+    #7c3aed,
+    #ec4899,
+    #06b6d4
+    );
+
+    background-size:500% 500%;
+
+    animation:aurora 15s ease infinite;
+}
+
+/* ==========================
+   AURORA BACKGROUND
+========================== */
+
+@keyframes aurora{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+/* ==========================
+   FLOATING GLOW ORBS
+========================== */
+
+body::before,
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    border-radius:50%;
+
+    z-index:0;
+}
+
+body::before{
+
+    width:300px;
+    height:300px;
+
+    top:-100px;
+    left:-100px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    animation:float 10s infinite ease-in-out;
+}
+
+body::after{
+
+    width:250px;
+    height:250px;
+
+    right:-80px;
+    bottom:-80px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    animation:float 12s infinite ease-in-out;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-40px);
+    }
+}
+
+/* ==========================
+   MAIN CONTAINER
+========================== */
+
+.checkout-container{
+
+    width:100%;
+    max-width:1000px;
+
+    position:relative;
+    z-index:10;
+
+    background:
+    rgba(255,255,255,.12);
+
+    border:
+    1px solid rgba(255,255,255,.18);
+
+    border-radius:35px;
+
+    padding:40px;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.3);
+
+    animation:showCard .8s ease;
+}
+
+@keyframes showCard{
+
+    from{
+        opacity:0;
+        transform:
+        translateY(70px)
+        scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+}
+
+/* ==========================
+   HEADINGS
+========================== */
+
+h1{
+
+    text-align:center;
+
+    color:white;
+
+    margin-bottom:30px;
+
+    font-size:clamp(
+    2rem,
+    5vw,
+    3.5rem
+    );
+}
+
+h2,h3{
+
+    color:white;
+
+    margin-bottom:15px;
+}
+
+/* ==========================
+   ADDRESS CARD
+========================== */
+
+.address-card{
+
+    padding:25px;
+
+    border-radius:25px;
+
+    margin-bottom:25px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    transition:.4s;
+}
+
+.address-card:hover{
+
+    transform:
+    translateY(-5px);
+
+    background:
+    rgba(255,255,255,.15);
+}
+
+.address-card p{
+
+    color:#e0e7ff;
+
+    line-height:1.8;
+}
+
+/* ==========================
+   EDIT BUTTON
+========================== */
+
+.address-card a{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    padding:12px 20px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed
+    );
+
+    transition:.3s;
+}
+
+.address-card a:hover{
+
+    transform:translateY(-3px);
+}
+
+/* ==========================
+   TOTAL BOX
+========================== */
+
+.total-box{
+
+    text-align:center;
+
+    margin:30px 0;
+}
+
+.total-box h2{
+
+    color:#fff;
+}
+
+/* ==========================
+   PAYMENT SECTION
+========================== */
+
+.payment-card{
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:
+    rgba(255,255,255,.08);
+}
+
+.payment-card label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:white;
+
+    font-size:1rem;
+
+    margin-bottom:15px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.payment-card label:hover{
+
+    transform:
+    translateX(8px);
+
+    background:
+    rgba(255,255,255,.15);
+}
+
+/* ==========================
+   RADIO BUTTON
+========================== */
+
+input[type="radio"]{
+
+    width:20px;
+    height:20px;
+}
+
+/* ==========================
+   UPI BOX
+========================== */
+
+.upi-box{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    animation:fadeIn .5s ease;
+}
+
+.upi-box img{
+
+    width:250px;
+
+    max-width:100%;
+
+    border-radius:20px;
+
+    background:white;
+
+    padding:10px;
+
+    margin-bottom:20px;
+
+    transition:.4s;
+}
+
+.upi-box img:hover{
+
+    transform:
+    scale(1.05);
+}
+
+.upi-box p{
+
+    color:white;
+
+    margin-bottom:15px;
+}
+
+.upi-box input{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    outline:none;
+
+    font-size:1rem;
+}
+
+/* ==========================
+   PLACE ORDER BUTTON
+========================== */
+
+button{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    color:white;
+
+    background:
+    linear-gradient(
+    135deg,
+    #10b981,
+    #06b6d4
+    );
+
+    box-shadow:
+    0 0 25px rgba(16,185,129,.5);
+
+    transition:.4s;
+}
+
+button:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.02);
+
+    box-shadow:
+    0 0 40px rgba(16,185,129,.8);
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+.back-link{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:white;
+
+    text-decoration:none;
+}
+
+/* ==========================
+   FADE IN
+========================== */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    .checkout-container{
+        padding:20px;
+    }
+
+    .payment-card label{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+}
+
+.error-message{
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+    font-weight:600;
+}
+
+.payment-warning{
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:
+    rgba(245,158,11,.12);
+
+    border:
+    1px solid rgba(245,158,11,.35);
+}
+
+.payment-warning span{
+
+    display:block;
+
+    font-weight:700;
+
+    color:#fbbf24;
+
+    margin-bottom:8px;
+}
+
+.payment-warning p{
+
+    color:#fef3c7;
+
+    font-size:.9rem;
+
+    line-height:1.6;
+}

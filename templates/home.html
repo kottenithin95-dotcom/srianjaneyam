@@ -3,30 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>kotte"sCart</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
 </head>
 <body>
-    <table border="2px solid">
-        <tr>
-            <th>stu_rollnumber</th>
-            <th>stu_name</th>
-            <th>stu_class</th>
-            <th>stu_mobile</th>
-            <th>stu_gender</th>
-            <th>stu_imgae</th>
-            <th>stu_markssheet</th>
-        </tr>
-        {% for x in data %}
-        <tr>
-            <td>{{x.stu_rollnumber}}</td>
-            <td>{{x.stu_name}}</td>
-            <td>{{x.stu_class}}</td>
-            <td>{{x.stu_mobile}}</td>
-            <td>{{x.stu_gender}}</td>
-            <td>{{x.stu_image}}</td>
-            <td>{{x.stu_markssheet}}</td>
-        </tr>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="left">
+            <a href="#">Language</a>
+            <a href="#">USD</a>
+        </div>
+
+        <div class="right">
+            <a href="mailto:kottenithin95@gmail.com">
+                📧 Email Us
+            </a>
+            <a href="tel:+916303395101">
+                📞 Call Us
+            </a>
+        </div>
+    </div>
+       
+
+
+    <!-- Main Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <h1>
+                <span class="blue">Kotte's </span>Cart
+            </h1>
+        </div>
+
+
+        <div class="category">
+
+            <button
+                id="categoryBtn"
+                class="category-btn"
+                type="button">
+
+                ☰ All Categories
+
+            </button>
+
+            <div
+                id="dropdownMenu"
+                class="dropdown-menu">
+
+                <a href="{% url 'home_page' %}">
+                    🛍️ All Products
+                </a>
+
+                {% for category in categories %}
+                <a href="{% url 'category_products' category.slug %}">
+                    📂 {{ category.name }}
+                </a>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <form method="GET" action="">
+            <div class="search-box">
+                <input 
+                    type="text"
+                    name="search" 
+                    placeholder="Search products..."
+                    value="{{ request.GET.search }}"
+                >
+                <button type="submit">🔍</button>
+            </div>
+        </form>
+
+
+        <div class="nav-right">
+
+            {% if request.user.is_authenticated %}
+
+                <span class="user">
+                    👤 {{ request.user.username }}
+                </span>
+
+                <a href="{% url 'my_orders' %}">
+                    📦 My Orders
+                </a>
+
+                <a href="{% url 'cart' %}" class="cart">
+                    🛒 Cart
+                    {% if cart_count > 0 %}
+                    <span class="cart-badge">
+                        {{ cart_count }}
+                    </span>
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'logout_page' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login_page' %}">
+                    Login
+                </a>
+
+                <a href="{% url 'register_page' %}">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- Banner -->
+
+    <section class="hero-slider">
+
+        <!-- Slide 1 -->
+        <div class="slide active">
+
+            <img
+                src="{% static 'images/banner1.jpg' %}"
+                alt="Premium Smartphones"
+            >
+
+            <div class="slide-content">
+
+                <span class="offer-tag">
+                    🔥 Premium Collection
+                </span>
+
+                <h1>
+                    Next Generation
+                    Shopping Experience
+                </h1>
+
+                <p>
+                    Discover flagship smartphones
+                    at unbeatable prices.
+                </p>
+
+                <a href="#products" class="hero-btn">
+                    Shop Now
+                </a> 
+
+            </div>
+
+        </div>
+
+        <!-- Slide 2 -->
+
+        <div class="slide">
+
+            <img
+                src="{% static 'images/dhoni.jpg' %}"
+                alt="Dhoni Banner"
+            >
+
+            <div class="slide-content">
+
+                <span class="offer-tag">
+                    🏏 Champion Deals
+                </span>
+
+                <h1>
+                    Shop Like
+                    A Champion
+                </h1>
+
+                <p>
+                    Special offers inspired by greatness.
+                </p>
+
+                <a href="#products" class="hero-btn">
+                    Explore Offers
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Slide 3 -->
+
+        <div class="slide">
+
+            <img
+                src="{% static 'images/banner3.jpg' %}"
+                alt="Electronics Sale"
+            >
+
+            <!-- <div class="slide-content">
+
+                <span class="offer-tag">
+                    ⚡ Mega Sale
+                </span>
+
+                <h1>
+                    Up To 50% OFF
+                    Electronics
+                </h1>
+
+                <p>
+                    Mobiles, Accessories,
+                    Gadgets & More.
+                </p>
+
+                <a href="#products" class="hero-btn">
+                    Buy Now
+                </a>
+
+            </div> -->
+
+        </div>
+
+    </section>
+    
+    <section id="products" class="products">
+
+        {% for product in data %}
+
+        <div class="product-card">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+
+            <p class="price">
+                ₹{{ product.price }}
+            </p>
+
+            {% if product.stock > 0 %}
+
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Add To Cart
+                    </button>
+                </form>
+
+            {% else %}
+
+                <button disabled>
+                    Out Of Stock
+                </button>
+
+            {% endif %}
+
+        </div>
+
+        {% empty %}
+
+        <div class="no-products">
+            <h2>
+                No Products Found 😔
+            </h2>
+        </div>
+
         {% endfor %}
-    </table>
+
+    </section>
+    <section class="services">
+
+        <div class="service">
+            🛡️
+            <h3>Secure Shopping</h3>
+            <p>100% Secure Payment</p>
+        </div>
+
+        <div class="service">
+            🚚
+            <h3>Free Delivery</h3>
+            <p>Orders Above ₹999</p>
+        </div>
+
+        <div class="service">
+            🎧
+            <h3>24/7 Support</h3>
+            <p>Dedicated Support</p>
+        </div>
+
+        <div class="service">
+            ⭐
+            <h3>Best Quality</h3>
+            <p>Premium Products</p>
+        </div>
+
+    </section>
+
+    <script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/order_success.css' %}">
+</head>
+<body>
+
+    <div class="success-container">
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h1>Order Placed Successfully</h1>
+
+        <h2>
+            Thank you for shopping at Kotte's Cart
+        </h2>
+
+        <!-- Order Summary -->
+
+        <div class="order-summary">
+
+            <div class="info-box">
+                <span>📦 Order ID</span>
+                <strong>#{{ order.id }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>💰 Total Amount</span>
+                <strong>₹{{ order.totalamount }}</strong>
+            </div>
+
+            <div class="info-box">
+                <span>📅 Ordered On</span>
+                <strong>
+                    {{ order.created_at|date:"d M Y" }}
+                </strong>
+            </div>
+
+            <div class="info-box">
+                <span>🚚 Status</span>
+
+                <span class="status {{ order.status|lower }}">
+                    {{ order.status }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- Products -->
+
+        <div class="products">
+
+            <h3>🛍 Ordered Products</h3>
+
+            {% for item in order.items.all %}
+
+            <div class="product-item">
+
+                <div>
+
+                    <div class="product-name">
+                        {{ item.product.name }}
+                    </div>
+
+                    <small>
+                        Quantity :
+                        {{ item.quantity }}
+                    </small>
+
+                </div>
+
+                <div class="product-price">
+                    ₹{{ item.price }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Shipping Address -->
+
+        <div class="address-box">
+
+            <h3>📍 Shipping Address</h3>
+
+            <p>
+                <strong>
+                    {{ order.address.full_name }}
+                </strong>
+            </p>
+
+            <p>
+                {{ order.address.mobile }}
+            </p>
+
+            <p>
+                {{ order.address.address_line }}
+            </p>
+
+            <p>
+                {{ order.address.city }},
+                {{ order.address.state }}
+            </p>
+
+            <p>
+                {{ order.address.pincode }}
+            </p>
+
+        </div>
+
+        <!-- Buttons -->
+
+        <div class="action-buttons">
+
+            <a href="{% url 'home_page' %}"
+               class="shop-btn">
+                Continue Shopping
+            </a>
+
+            <a href="{% url 'my_orders' %}"
+               class="orders-btn">
+                View My Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    {% load static %}
+
+    <title>Login | Kotte's Cart</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/login.css' %}"
+    >
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+
+    <lottie-player
+        src="https://assets7.lottiefiles.com/packages/lf20_jtbfg2nb.json"
+        background="transparent"
+        speed="1"
+        style="width:240px;height:240px;"
+        loop
+        autoplay>
+    </lottie-player>
+    
+
+    <h1>Kotte's Cart</h1>
+
+    <p class="subtitle">
+        Welcome Back
+    </p>
+
+
+    {% if message %}
+
+        <div class="alert-message">
+
+            {{ message }}
+
+        </div>
+
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="input-box">
+
+            <input
+                type="text"
+                name="username"
+                required
+                placeholder="Username"
+            >
+
+
+        </div>
+
+        <div class="input-box password-box">
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="Password"
+            >
+
+            <span
+                class="eye"
+                onclick="togglePassword()"
+            >
+                👁️
+            </span>
+
+        </div>
+
+        <button
+            type="submit"
+            class="login-btn"
+        >
+            Login
+        </button>
+        
+
+    </form>
+    
+
+    <div class="register-link">
+
+        Don't have an account?
+
+        <a href="{% url 'register_page' %}">
+            Register
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(){
+
+    let password =
+    document.getElementById(
+        "password"
+    );
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+    }else{
+
+        password.type = "password";
+
+    }
+}
+
+</script>
+
+</body>
+</html>

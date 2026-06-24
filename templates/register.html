@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    {% load static %}
+
+    <title>Register | Kotte's Cart</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/register.css' %}"
+    >
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+
+<body>
+
+    <div
+        id="successPopup"
+        class="success-popup"
+    >
+        ✅ Registration Successful
+    </div>
+
+    <div class="register-container">
+
+        <div class="shopping-animation">
+
+            <lottie-player
+                src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json"
+                background="transparent"
+                speed="1"
+                style="width:240px;height:240px;"
+                loop
+                autoplay>
+            </lottie-player>
+
+        </div>
+
+        <h1>Kotte's Cart</h1>
+
+        <p class="subtitle">
+            Create Your Account
+        </p>
+
+        {% if message %}
+
+            <div class="alert-message">
+
+                {{ message }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="input-box">
+
+                <input
+                    type="text"
+                    name="username"
+                    required
+                    placeholder="Username"
+                >
+
+
+            </div>
+
+            <div class="input-box">
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Email Address"
+                >
+
+
+            </div>
+
+            <div class="input-box password-box">
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    placeholder="Password"
+                >
+
+
+                <span
+                    class="eye"
+                    onclick="togglePassword()"
+                >
+                    👁️
+                </span>
+
+            </div>
+
+            <div class="input-box">
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    required
+                    placeholder="Confirm Password"
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="register-btn"
+            >
+                Create Account
+            </button>
+
+
+        </form>
+
+        
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="{% url 'login_page' %}">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+<script>
+
+function togglePassword(){
+
+    let password =
+    document.getElementById(
+        "password"
+    );
+
+    if(
+        password.type === "password"
+    ){
+
+        password.type = "text";
+
+    }else{
+
+        password.type = "password";
+
+    }
+}
+
+function showSuccess(){
+
+    let popup =
+    document.getElementById(
+        "successPopup"
+    );
+
+    popup.style.display =
+    "block";
+
+    setTimeout(function(){
+
+        popup.style.display =
+        "none";
+
+    },3000);
+}
+
+</script>
+
+{% if messages %}
+
+<script>
+showSuccess();
+</script>
+
+{% endif %}
+
+<script>
+
+setTimeout(function(){
+
+    let alertBox =
+    document.querySelector(
+        ".alert-message"
+    );
+
+    if(alertBox){
+
+        alertBox.style.display =
+        "none";
+
+    }
+
+},6000);
+
+</script>
+
+</body>
+</html>

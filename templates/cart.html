@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+<body>
+    <div class="cart-container">
+
+        <h1 class="cart-title">🛒 My Shopping Cart</h1>
+
+        {% for item in cart.items.all %}
+        
+        <div class="cart-item">
+            <div class="product-info">                
+                {% if item.product.image %}
+
+                    <img src="{{ item.product.image.url }}" alt="" width="100">
+
+                {% else %}
+                    <p>no image</p>
+                {% endif %}
+                <h3>{{ item.product.name }}</h3>
+
+                <p>Price: ₹ {{ item.product.price }}</p>
+
+                <p>Subtotal: ₹ {{ item.subtotal }}</p>
+
+            </div>
+
+            <div class="quantity">
+
+                <a href="{% url 'decrease_quantity' item.id %}">
+                    -
+                </a>
+
+                <span>
+                    {{ item.quantity }}
+                </span>
+
+                <a href="{% url 'increase_quantity' item.id %}">
+                    +
+                </a>
+
+            </div>
+
+
+            <div class="remove-btn">
+
+                <a href="{% url 'remove_item' item.id %}">
+                    Remove
+                </a>
+
+            </div>
+
+        </div>
+
+
+        {% empty %}
+        <div class="empty-cart">
+            <h2>Your Cart is Empty 🛍️</h2>
+
+            <a href="{% url 'home_page' %}">
+                Continue Shopping
+            </a>
+        </div>
+        {% endfor %}
+
+
+        {% if cart.items.all %}
+        <div class="total-box">
+            <h2>Total Amount: ₹ {{ cart.total }}</h2>
+
+            <a href="{% url 'checkout' %}" class="checkout-btn">
+                Proceed To Checkout
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
