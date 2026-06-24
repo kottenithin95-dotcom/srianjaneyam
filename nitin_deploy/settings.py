@@ -80,8 +80,9 @@ WSGI_APPLICATION = 'nitin_deploy.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 if os.environ.get("RENDER"): 
-    # Production (Render + Railway MySQL) 
+    # Production (Render + aiven) 
     DATABASES = { 
         "default": { 
             "ENGINE": "django.db.backends.mysql", 
@@ -100,13 +101,11 @@ else:
             "ENGINE": "django.db.backends.mysql", 
             "NAME": "nithin_deploy", 
             "USER": "root", 
-            "PASSWORD": "Rajamani12..", 
+            "PASSWORD": os.environ.get("LOCAL_DB_PASSWORD"), 
             "HOST": "localhost", 
             "PORT": "3306", 
         } 
     }
-
-
 
 
 # Password validation
@@ -164,6 +163,6 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'kottenithin95@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'nwgy dcnc joxo sxzt'
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
