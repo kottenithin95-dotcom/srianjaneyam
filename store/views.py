@@ -4,14 +4,14 @@ from store.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
-
-from django.core.mail import send_mail
-from django.conf import settings
-from store.email_messages import (
-    cod_order_message,
-    upi_order_message,
-)
+# from django.core.mail import send_mail
+# from django.conf import settings
+# from store.email_messages import (
+#     cod_order_message,
+#     upi_order_message,
+# )
 
 from django.db.models import Q
 
@@ -370,25 +370,25 @@ def checkout(request):
         )
 
 
-        if payment_method == "cod":
-            message = cod_order_message(
-                request.user,
-                order
-            )
+        # if payment_method == "cod":
+        #     message = cod_order_message(
+        #         request.user,
+        #         order
+        #     )
 
-        else:
-            message = upi_order_message(
-                request.user,
-                order,
-                transaction_id
-            )
-        send_mail(
-            "Order Confirmation",
-            message,
-            settings.EMAIL_HOST_USER,
-            [address.email],
-            fail_silently=False
-        )
+        # else:
+        #     message = upi_order_message(
+        #         request.user,
+        #         order,
+        #         transaction_id
+        #     )
+        # send_mail(
+        #     "Order Confirmation",
+        #     message,
+        #     settings.EMAIL_HOST_USER,
+        #     [address.email],
+        #     fail_silently=False
+        # )
 
         cart.items.all().delete()
 
