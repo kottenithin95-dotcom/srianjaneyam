@@ -6,7 +6,9 @@ from store.email_messages import (
     payment_verified_message,
     payment_failed_message,
     out_for_delivery_message,
-    delivered_message
+    delivered_message,
+    cod_order_message,
+    upi_order_message,
 )
 
 from .models import Order,Payment
@@ -93,15 +95,44 @@ def order_status_email(sender, instance, created, **kwargs):
 
 
 
+
+
 @receiver(post_save, sender=Payment)
 def payment_status_email(sender, instance, created, **kwargs):
 
     if created:
         return
 
+    # Payment Pending
+    if instance.status == "pending":
+
+        if instance.payment_method.lower() == "cod":
+
+            message = cod_order_message(
+                instance.order.user,
+                instance.order,
+                instance.transaction_id
+            )
+
+        else:
+
+            message = upi_order_message(
+                instance.order.user,
+                instance.order,
+                instance.transaction_id
+            )
+
+        send_mail(
+            "Order Confirmation",
+            message,
+            settings.EMAIL_HOST_USER,
+            [instance.order.user.email],
+            fail_silently=False
+        )
+
     # PAYMENT SUCCESS
 
-    if instance.status == "success":
+    elif instance.status == "success":
 
         instance.order.status = "confirmed"
         instance.order.save()
