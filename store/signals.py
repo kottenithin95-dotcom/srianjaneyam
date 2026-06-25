@@ -13,8 +13,6 @@ from store.email_messages import (
 
 from .models import Order,Payment
 
-
-
 @receiver(post_save, sender=Order)
 def order_status_email(sender, instance, created, **kwargs):
 
@@ -96,18 +94,15 @@ def order_status_email(sender, instance, created, **kwargs):
 
 
 
-
 @receiver(post_save, sender=Payment)
 def payment_status_email(sender, instance, created, **kwargs):
 
+    # NEW PAYMENT CREATED (User just placed the order)
     if created:
-        return
-
-    # Payment Pending
-    if instance.status == "pending":
 
         if instance.payment_method == "cod":
 
+            # Confirm COD order
             instance.order.status = "confirmed"
             instance.order.save(update_fields=["status"])
 
@@ -118,8 +113,8 @@ def payment_status_email(sender, instance, created, **kwargs):
             )
 
         else:
-            
 
+            # UPI payment is pending
             message = upi_order_message(
                 instance.order.user,
                 instance.order,
@@ -132,13 +127,12 @@ def payment_status_email(sender, instance, created, **kwargs):
             settings.EMAIL_HOST_USER,
             [instance.order.user.email],
             fail_silently=False
-        )   
-            
+        )
 
+        return
 
     # PAYMENT SUCCESS
-
-    elif instance.status == "success":
+    if instance.status == "success":
 
         if instance.payment_method != "cod":
 
@@ -158,9 +152,8 @@ def payment_status_email(sender, instance, created, **kwargs):
             fail_silently=False
         )
 
-    # PAYMENT FAILURE
-
-    elif instance.status == "failure":
+    # PAYMENT FAILED
+    elif instance.status == "failed":
 
         instance.order.status = "cancelled"
         instance.order.save(update_fields=["status"])
