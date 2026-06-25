@@ -370,25 +370,6 @@ def checkout(request):
         )
 
 
-        # if payment_method == "cod":
-        #     message = cod_order_message(
-        #         request.user,
-        #         order
-        #     )
-
-        # else:
-        #     message = upi_order_message(
-        #         request.user,
-        #         order,
-        #         transaction_id
-        #     )
-        # send_mail(
-        #     "Order Confirmation",
-        #     message,
-        #     settings.EMAIL_HOST_USER,
-        #     [address.email],
-        #     fail_silently=False
-        # )
 
         cart.items.all().delete()
 

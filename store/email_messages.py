@@ -1,4 +1,4 @@
-def cod_order_message(user, order):
+def cod_order_messagee(user, order):
 
     return f"""
 Dear {user.username},

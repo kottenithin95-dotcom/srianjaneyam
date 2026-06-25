@@ -8,7 +8,7 @@ from store.email_messages import (
     payment_failed_message,
     out_for_delivery_message,
     delivered_message,
-    cod_order_message,
+    cod_order_messagee,
     upi_order_message,
     packed_message,
     shipped_message,
@@ -122,16 +122,15 @@ def payment_status_email(sender, instance, created, **kwargs):
     # NEW PAYMENT CREATED (User just placed the order)
     if created:
 
-        if instance.payment_method == "cod":
+        if instance.method == "cod":
 
             # Confirm COD order
             instance.order.status = "confirmed"
             instance.order.save(update_fields=["status"])
 
-            message = cod_order_message(
+            message = cod_order_messagee(
                 instance.order.user,
                 instance.order,
-                instance.transaction_id
             )
 
         else:
@@ -154,7 +153,7 @@ def payment_status_email(sender, instance, created, **kwargs):
     # PAYMENT SUCCESS
     if instance.status == "success":
 
-        if instance.payment_method != "cod":
+        if instance.method != "cod":
 
             instance.order.status = "confirmed"
             instance.order.save(update_fields=["status"])
