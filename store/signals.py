@@ -108,6 +108,9 @@ def payment_status_email(sender, instance, created, **kwargs):
 
         if instance.payment_method.lower() == "cod":
 
+            instance.order.status = "confirmed"
+            instance.order.save(update_fields=["status"])
+
             message = cod_order_message(
                 instance.order.user,
                 instance.order,
@@ -115,6 +118,7 @@ def payment_status_email(sender, instance, created, **kwargs):
             )
 
         else:
+            
 
             message = upi_order_message(
                 instance.order.user,
@@ -128,14 +132,18 @@ def payment_status_email(sender, instance, created, **kwargs):
             settings.EMAIL_HOST_USER,
             [instance.order.user.email],
             fail_silently=False
-        )
+        )   
+            
+
 
     # PAYMENT SUCCESS
 
     elif instance.status == "success":
 
-        instance.order.status = "confirmed"
-        instance.order.save()
+        if instance.payment_method.lower() != "cod":
+            
+            instance.order.status = "confirmed"
+            instance.order.save(update_fields=["status"])
 
         message = payment_verified_message(
             instance.order.user,
@@ -155,7 +163,7 @@ def payment_status_email(sender, instance, created, **kwargs):
     elif instance.status == "failure":
 
         instance.order.status = "cancelled"
-        instance.order.save()
+        instance.order.save(update_fields=["status"])
 
         message = payment_failed_message(
             instance.order.user,
