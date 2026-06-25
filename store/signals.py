@@ -106,7 +106,7 @@ def payment_status_email(sender, instance, created, **kwargs):
     # Payment Pending
     if instance.status == "pending":
 
-        if instance.payment_method.lower() == "cod":
+        if instance.payment_method == "cod":
 
             instance.order.status = "confirmed"
             instance.order.save(update_fields=["status"])
@@ -140,8 +140,8 @@ def payment_status_email(sender, instance, created, **kwargs):
 
     elif instance.status == "success":
 
-        if instance.payment_method.lower() != "cod":
-            
+        if instance.payment_method != "cod":
+
             instance.order.status = "confirmed"
             instance.order.save(update_fields=["status"])
 
