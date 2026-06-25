@@ -2,6 +2,8 @@ def cod_order_message(user, order):
 
     return f"""
 Dear {user.username},
+ 
+📦 Great News!
 
 Thank you for shopping with Kotte's Cart.
 
@@ -28,6 +30,8 @@ def upi_order_message(
 
     return f"""
 Dear {user.username},
+
+📦 Great News!
 
 Thank you for shopping with Kotte's Cart.
 
@@ -81,7 +85,7 @@ def payment_failed_message(user, order):
 
 Dear {user.username},
 
-We were unable to verify the payment details provided for your order.
+ ❌ We were unable to verify the payment details provided for your order.
 
 Order ID: {order.id}
 
@@ -100,13 +104,75 @@ Kotte's Cart Team
 
 
 
+def packed_message(user, order):
+
+    return f"""
+Hi {user.username},
+
+📦 Great News!
+
+Your order has been packed successfully.
+
+Order ID: #{order.id}
+
+Your package is now ready for shipment.
+We'll notify you once it has been shipped.
+
+Thank you for shopping with Kotte's Cart.
+
+Regards,
+Kotte's Cart Team
+"""
+
+
+def shipped_message(user, order):
+
+    return f"""
+Hi {user.username},
+
+🚚 Your order is on the way!
+
+Your order has been shipped successfully.
+
+Order ID: #{order.id}
+
+It is now on its way to your delivery address.
+
+We'll notify you again when it is out for delivery.
+
+Thank you for shopping with Kotte's Cart.
+
+Regards,
+Kotte's Cart Team
+"""
+
+
+def cancelled_message(user, order):
+
+    return f"""
+Hi {user.username},
+
+❌ Your order has been cancelled.
+
+Order ID: #{order.id}
+
+If this cancellation was unexpected or you need any assistance,
+please contact our support team.
+
+Thank you for choosing Kotte's Cart.
+
+Regards,
+Kotte's Cart Team
+"""
+
+
 def out_for_delivery_message(user, order):
         
         return f"""
 
 Dear {user.username},
 
-Good news!
+  🚚  Good news!
 
 Your order is now out for delivery and will reach you soon.
 
