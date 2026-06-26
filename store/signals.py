@@ -135,6 +135,7 @@ def payment_status_email(sender, instance, created, **kwargs):
 
         else:
 
+
             # UPI payment is pending
             message = upi_order_message(
                 instance.order.user,

@@ -115,15 +115,15 @@ class OrderItem(models.Model):
 
 class Payment(models.Model):
     payment_method = [
-        ('upi', 'UPI'),
-        ('cod', 'Cash On Delivery'),
+        ('upi', 'upi'),
+        ('cod', 'cod'),
     ]
 
     payment_status = [
-        ('pending', 'Pending'),
-        ('verified', 'Verified'),
-        ('success', 'Success'),
-        ('failure', 'Failure'),
+        ('pending', 'pending'),
+        ('verified', 'verified'),
+        ('success', 'success'),
+        ('failure', 'failure'),
     ]
 
     order=models.OneToOneField(Order,on_delete=models.CASCADE)
